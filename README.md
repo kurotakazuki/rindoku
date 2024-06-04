@@ -15,7 +15,7 @@
 
    - 説明: 輪読会で使用する本のテキスト
    - タイプ: 文字列
-   - 例: `python main.py "$(cat input.txt)"`
+   - 例: `python main.py -i "$(cat input.txt)"`
    - 詳細: 処輪読会で使用する本のテキストを入力します。
 
 2. **-m / --model（オプション）**
@@ -23,14 +23,14 @@
    - 説明: モデル名（デフォルト: `gpt-4o`）
    - タイプ: 文字列
    - デフォルト: `gpt-4o`
-   - 例: `python main.py "$(cat input.txt)" -m gpt-3`
+   - 例: `python main.py -i "$(cat input.txt)" -m gpt-3`
    - 詳細: 使用するモデルの名前を指定します。指定しない場合は、デフォルトの`gpt-4o`が使用されます。
 
 3. **-p / --prompt（オプション）**
    - 説明: プロンプトファイルのパス（デフォルト: `prompt.txt`）
    - タイプ: 文字列
    - デフォルト: `prompt.txt`
-   - 例: `python main.py "$(cat input.txt)" -p custom_prompt.txt`
+   - 例: `python main.py -i "$(cat input.txt)" -p custom_prompt.txt`
    - 詳細: 使用するプロンプトファイルのパスを指定します。指定しない場合は、デフォルトの`prompt.txt`が使用されます。
 
 #### 使用例
@@ -38,18 +38,18 @@
 - デフォルトのモデルとプロンプトファイルを使用する場合
 
   ```sh
-  python main.py "$(cat input.txt)"
+  python main.py -i "$(cat input.txt)"
   ```
 
 - モデル名を指定する場合
 
   ```sh
-  python main.py "$(cat input.txt)" -m gpt-3
+  python main.py -i "$(cat input.txt)" -m gpt-3
   ```
 
 - プロンプトファイルのパスを指定する場合
   ```sh
-  python main.py "$(cat input.txt)" -p custom_prompt.txt
+  python main.py -i "$(cat input.txt)" -p custom_prompt.txt
   ```
 
 ## 環境構築
