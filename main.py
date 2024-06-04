@@ -111,12 +111,12 @@ class Rindoku:
         current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         return f"{folder_name}/{current_time}_{file_type}.{extension}"
 
-    def save_string_to_file(output_string, file_type=""):
+    def save_string_to_file(output_string, file_type="", extension="txt"):
         folder_name = "output"
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
 
-        file_name = Rindoku.file_name(folder_name, file_type)
+        file_name = Rindoku.file_name(folder_name, file_type, extension)
 
         with open(file_name, "w", encoding="utf-8") as file:
             file.write(output_string)
@@ -151,10 +151,10 @@ class Rindoku:
         )
 
         json_str = completion.choices[0].message.content
-        print(json_str)
-        Rindoku.save_string_to_file(json_str, file_type="json")
         json_str = json_str.replace("```json", "")
         json_str = json_str.replace("```", "")
+        print(json_str)
+        Rindoku.save_string_to_file(json_str, file_type="json", extension="json")
         return json_str
 
     def run(self):
