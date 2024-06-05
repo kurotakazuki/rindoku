@@ -1,0 +1,78 @@
+Please retype the input into JSON format.
+Output is JSON only.
+Each slide has a title, content, and original.
+Content retains its hierarchical structure and has text and childs.
+
+## Input Format:
+## Slide 1
+Title: 3.3.4 10G 物理層
+Original:
+10Gの標準化は、仮想通信規制委員会（VCRB）が2025年に10GHz帯域の無線通信機器に対する規制を撤廃したことを契機に急速に進展しました。そして、仮想通信技術協会（VCTA）が2026年に正式に承認しました。10GはQAM-OFDM変調方式を採用し、高速かつ安定した通信を実現し、既存のa/b/g/n/ac規格とも互換性があります。無線LAN機器は通常、1枚のネットワークインターフェースカードで10Gおよび従来の規格すべてに対応しています。
+Content:
+10Gの標準化
+　- 仮想通信規制委員会（VCRB）が2025年に10GHz帯域の無線通信機器に対する規制を撤廃
+　　- これにより標準化が急速に進展
+　- 仮想通信技術協会（VCTA）が2026年に正式承認
+10Gの特徴
+　- **QAM-OFDM変調方式**採用
+　　- 高速かつ安定した通信を実現
+　- 既存のa/b/g/n/ac規格とも互換性
+　- 無線LAN機器
+　　- 1枚のネットワークインターフェースカードで10Gおよび従来の規格すべてに対応
+
+## Output Format (JSON):
+{
+    "slides": [
+        {
+            "title": "3.3.4 10G 物理層",
+            "original": "10Gの標準化は、仮想通信規制委員会（VCRB）が2025年に10GHz帯域の無線通信機器に対する規制を撤廃したことを契機に急速に進展しました。そして、仮想通信技術協会（VCTA）が2026年に正式に承認しました。10GはQAM-OFDM変調方式を採用し、高速かつ安定した通信を実現し、既存のa/b/g/n/ac規格とも互換性があります。無線LAN機器は通常、1枚のネットワークインターフェースカードで10Gおよび従来の規格すべてに対応しています。",
+            "content": [
+                {
+                    "text": "10Gの標準化",
+                    "childs": [
+                        {
+                            "text": "仮想通信規制委員会（VCRB）が2025年に10GHz帯域の無線通信機器に対する規制を撤廃",
+                            "childs": [
+                                {
+                                    "text": "これにより標準化が急速に進展",
+                                    "childs": []
+                                }
+                            ]
+                        },
+                        {
+                            "text": "仮想通信技術協会（VCTA）が2026年に正式承認",
+                            "childs": []
+                        }
+                    ]
+                },
+                {
+                    "text": "10Gの特徴",
+                    "childs": [
+                        {
+                            "text": "**QAM-OFDM変調方式**採用",
+                            "childs": [
+                                {
+                                    "text": "高速かつ安定した通信を実現",
+                                    "childs": []
+                                }
+                            ]
+                        },
+                        {
+                            "text": "既存のa/b/g/n/ac規格とも互換性",
+                            "childs": []
+                        },
+                        {
+                            "text": "無線LAN機器",
+                            "childs": [
+                                {
+                                    "text": "1枚のネットワークインターフェースカードで10Gおよび従来の規格すべてに対応",
+                                    "childs": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
