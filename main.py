@@ -55,6 +55,7 @@ class Rindoku:
         self.prompt_str = Rindoku.read_prompt(args.prompt)
         self.model = args.model
         self.input = args.input
+        self.start = args.start
         self.json_prompt_str = Rindoku.read_json_prompt(args.json_prompt)
         self.json2pptx = JsonToPptx()
 
@@ -73,6 +74,13 @@ class Rindoku:
         )
         parser.add_argument(
             "-p", "--prompt", type=str, default="prompt.txt", help="Prompt file path"
+        )
+        parser.add_argument(
+            "-s",
+            "--start",
+            type=str,
+            default="text",
+            help="start from text, plot, or json",
         )
         parser.add_argument(
             "-j",
@@ -159,20 +167,26 @@ class Rindoku:
 
     def run(self):
         print("Rindoku CLI RUN")
-        api_key = os.environ.get("OPENAI_API_KEY")
-        if not api_key:
-            print(
-                "Error: OPENAI_API_KEY is not set in the environment variables.\nCreate an API key and set it in the `.env` file that references `.env.example`."
-            )
-            exit(1)
 
-        client = OpenAI(api_key=api_key)
+        if self.start == "plot" or self.start == "text":
+            api_key = os.environ.get("OPENAI_API_KEY")
+            if not api_key:
+                print(
+                    "Error: OPENAI_API_KEY is not set in the environment variables.\nCreate an API key and set it in the `.env` file that references `.env.example`."
+                )
+                exit(1)
+            client = OpenAI(api_key=api_key)
 
-        print("Rindoku CLI create slide plot")
-        slide_plot = self.create_plot(client, self.input)
+            if self.start == "text":
+                print("Rindoku CLI create slide plot")
+                slide_plot = self.create_plot(client, self.input)
+            elif self.start == "plot":
+                slide_plot = self.input
 
-        print("Rindoku CLI create slide json")
-        json_str = self.create_json(client, slide_plot)
+            print("Rindoku CLI create slide json")
+            json_str = self.create_json(client, slide_plot)
+        elif self.start == "json":
+            json_str = self.input
 
         self.json2pptx.create_pptx(
             json_str,
