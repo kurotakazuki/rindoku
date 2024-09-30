@@ -6,6 +6,28 @@ import os
 import json
 from pptx import Presentation
 from pptx.util import Cm
+from typing import List, Optional
+from pydantic import BaseModel, Field
+
+
+class ContentChild(BaseModel):
+    text: str
+    childs: Optional[List["ContentChild"]] = Field(default_factory=list)
+
+
+class Content(BaseModel):
+    text: str
+    childs: Optional[List[ContentChild]] = Field(default_factory=list)
+
+
+class Slide(BaseModel):
+    title: str
+    original: str
+    content: Optional[List[Content]] = Field(default_factory=list)
+
+
+class SlideData(BaseModel):
+    slides: Optional[List[Slide]] = Field(default_factory=list)
 
 
 class JsonToPptx:
@@ -70,7 +92,7 @@ class Rindoku:
             help="Input text",
         )
         parser.add_argument(
-            "-m", "--model", type=str, default="gpt-4o", help="Model name"
+            "-m", "--model", type=str, default="gpt-4o-2024-08-06", help="Model name"
         )
         parser.add_argument(
             "-p", "--prompt", type=str, default="prompt.txt", help="Prompt file path"
@@ -147,7 +169,7 @@ class Rindoku:
         return slide_plot
 
     def create_json(self, client, slide_plot):
-        completion = client.chat.completions.create(
+        completion = client.beta.chat.completions.parse(
             model=self.model,
             messages=[
                 {
@@ -156,11 +178,10 @@ class Rindoku:
                 },
                 {"role": "user", "content": slide_plot},
             ],
+            response_format=SlideData,
         )
 
         json_str = completion.choices[0].message.content
-        json_str = json_str.replace("```json", "")
-        json_str = json_str.replace("```", "")
         print(json_str)
         Rindoku.save_string_to_file(json_str, file_type="json", extension="json")
         return json_str
